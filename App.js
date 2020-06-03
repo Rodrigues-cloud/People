@@ -1,7 +1,9 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-//import { StackNavigator } from 'react-navigation';
+//import { createStackNavigator, reactNavigationStack } from 'react-navigation';
 import PeoplePage from  './src/pages/PeoplePage';
 import PeopleDetailPage from './src/pages/PeopleDatailPage';
+
+import { capitalizeFirstLetter } from './src/util';
 
 //qualquer coisa substituir o por (AppNavigator)
 const AppNavigator = createStackNavigator({
@@ -9,8 +11,19 @@ const AppNavigator = createStackNavigator({
       screen: PeoplePage
     },
     'PeopleDetail': {
-      screen: PeopleDetailPage
-    }
+      screen: PeopleDetailPage,
+        navigationOptions: ({navigation}) => {
+            const peopleName = capitalizeFirstLetter(navigation.state.params.people.name.first);
+
+            return ({
+              title: peopleName,
+              headerTitleStyle: {
+                color: 'white',
+                fontSize: 30,
+              }
+            });
+        }  
+    }   
 }, {
     defaultNavigationOptions: {
         title: 'Pessoas!',
@@ -27,7 +40,8 @@ const AppNavigator = createStackNavigator({
           textAlign: 'center',
 
         },
-    }
+
+    }  
 
 });
 // tentar substituir por (StackNavigator)
